@@ -366,7 +366,7 @@
     "jlpt": "N5",
     "id": 41,
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "japanese": "駅の近くに新しいカフェができました。",
@@ -383,7 +383,7 @@
     "english": "It looks like rain, so let's bring an umbrella.",
     "jlpt": "N4",
     "id": 43,
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
