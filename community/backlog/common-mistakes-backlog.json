@@ -143,7 +143,7 @@
     "explanation": "Use natural collocation and order. (Pattern set 1)",
     "id": 18,
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "wrong": "この漢字は読み方が難しいです。",
@@ -151,7 +151,7 @@
     "explanation": "Prefer noun linkage with の. (Pattern set 1)",
     "id": 19,
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "wrong": "私はお金がありませんです。",
@@ -303,7 +303,7 @@
     "explanation": "Use natural collocation and order. (Pattern set 2)",
     "id": 38,
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "wrong": "この漢字は読み方が難しいです。",
@@ -311,7 +311,7 @@
     "explanation": "Prefer noun linkage with の. (Pattern set 2)",
     "id": 39,
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "wrong": "私はお金がありませんです。",
@@ -351,14 +351,14 @@
     "explanation": "い-adjectives do not take だ in plain present. (Pattern set 3)",
     "id": 44,
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "wrong": "先生は私を日本語を教えました。",
     "correct": "先生は私に日本語を教えました。",
     "explanation": "Recipient takes に with 教える. (Pattern set 3)",
     "id": 45,
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
