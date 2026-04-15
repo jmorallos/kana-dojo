@@ -47,6 +47,15 @@ const difficultyIcons: Record<GauntletDifficulty, React.ReactNode> = {
   'instant-death': <Skull size={20} />,
 };
 const USE_NEW_GAME_MODE_ICON_STYLE = true;
+const GAME_MODE_ICON_SIZE = 22;
+const GAME_MODE_ICON_FLOAT_DELAY_CLASS = '[animation-delay:180ms]';
+const gameModeIconStyle = {
+  base: 'motion-safe:animate-float flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-b-6 transition-colors [--float-distance:-2px]',
+  selected:
+    'border-(--main-color-accent) bg-(--main-color) text-(--background-color)',
+  unselected:
+    'border-(--secondary-color-accent) bg-(--secondary-color) text-(--background-color) opacity-85',
+} as const;
 
 const ModeSetupMenu = ({
   isOpen,
@@ -492,22 +501,22 @@ function GameModeCards({
             <div
               className={clsx(
                 USE_NEW_GAME_MODE_ICON_STYLE
-                  ? 'motion-safe:animate-float flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-b-6 transition-colors [--float-distance:-2px]'
+                  ? gameModeIconStyle.base
                   : 'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl',
                 USE_NEW_GAME_MODE_ICON_STYLE &&
                   (isSelected
-                    ? 'border-(--main-color-accent) bg-(--main-color) text-(--background-color)'
-                    : 'border-(--secondary-color-accent) bg-(--secondary-color) text-(--background-color)'),
+                    ? gameModeIconStyle.selected
+                    : gameModeIconStyle.unselected),
                 USE_NEW_GAME_MODE_ICON_STYLE &&
                   index === 1 &&
-                  '[animation-delay:180ms]',
+                  GAME_MODE_ICON_FLOAT_DELAY_CLASS,
                 !USE_NEW_GAME_MODE_ICON_STYLE &&
                   (isSelected
                     ? 'bg-(--main-color) text-(--background-color)'
                     : 'bg-(--border-color) text-(--muted-color)'),
               )}
             >
-              <Icon size={USE_NEW_GAME_MODE_ICON_STYLE ? 22 : 24} />
+              <Icon size={USE_NEW_GAME_MODE_ICON_STYLE ? GAME_MODE_ICON_SIZE : 24} />
             </div>
             <div className='min-w-0 flex-1'>
               <h3 className='text-lg font-medium text-(--main-color)'>
