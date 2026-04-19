@@ -361,7 +361,7 @@
     ],
     "correctIndex": 1,
     "completed": false,
-    "issued": false,
+    "issued": true,
     "completedBy": "jonathan7591",
     "completedPR": 13571
   },
