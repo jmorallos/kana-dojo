@@ -151,7 +151,7 @@
     ],
     "correctIndex": 1,
     "completed": false,
-    "issued": false
+    "issued": true
   },
   {
     "id": 12,
@@ -502,7 +502,7 @@
       "Aikido"
     ],
     "correctIndex": 0,
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -1776,7 +1776,7 @@
       "Bering Sea"
     ],
     "correctIndex": 0,
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {

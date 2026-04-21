@@ -492,15 +492,21 @@
     "meaning": "Acting can lead to luck (or trouble)"
   },
   {
-  "japanese": "七転び八起き",
-  "romaji": "Nanakorobi yaoki",
-  "english": "Fall seven times, get up eight",
-  "meaning": "Never give up"
+    "japanese": "七転び八起き",
+    "romaji": "Nanakorobi yaoki",
+    "english": "Fall seven times, get up eight",
+    "meaning": "Never give up"
   },
   {
-  "japanese": "縁は異なもの味なもの",
-  "romaji": "En wa inamono aji na mono",
-  "english": "Fate is strange yet delightful",
-  "meaning": "Unexpected connections can be good"
+    "japanese": "縁は異なもの味なもの",
+    "romaji": "En wa inamono aji na mono",
+    "english": "Fate is strange yet delightful",
+    "meaning": "Unexpected connections can be good"
+  },
+  {
+    "japanese": "後悔先に立たず",
+    "romaji": "Koukai saki ni tatazu",
+    "english": "Regret does not stand before",
+    "meaning": "It's too late for regrets"
   }
 ]

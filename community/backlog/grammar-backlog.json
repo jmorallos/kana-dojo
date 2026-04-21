@@ -176,7 +176,7 @@
   {
     "id": 30,
     "text": "\"〜おう/〜よう\" is the volitional form, used to say \"let's\" or \"I will\".",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -212,7 +212,7 @@
   {
     "id": 36,
     "text": "\"〜ことにする\" expresses a decision, like \"decide to\".",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -369,7 +369,7 @@
     "id": 62,
     "text": "\"〜につれて\" means \"as... changes, ... also changes\".",
     "completed": false,
-    "issued": false
+    "issued": true
   },
   {
     "id": 63,

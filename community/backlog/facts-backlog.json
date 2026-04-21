@@ -176,7 +176,7 @@
   {
     "id": 30,
     "fact": "The Japanese word 'boketto' (ぼけっと) describes the act of gazing vacantly into the distance without thinking about anything specific.",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -290,7 +290,7 @@
   {
     "id": 49,
     "fact": "The word 'amae' (甘え) describes depending on another's goodwill - a uniquely Japanese concept of presuming on someone's affection.",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -1166,7 +1166,7 @@
   {
     "id": 195,
     "fact": "There's a Japanese practice 'chinmoku' (沈黙) - meaningful silence in conversation that's comfortable, not awkward.",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -1280,7 +1280,7 @@
   {
     "id": 214,
     "fact": "In many Japanese cities, you can find public 'koban' (交番) — small neighborhood police boxes that help with directions and lost items.",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -1364,7 +1364,7 @@
   {
     "id": 228,
     "fact": "The Japanese term 'matsuri' (祭り) broadly means festival, and many neighborhoods host their own with portable shrines ('mikoshi').",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
