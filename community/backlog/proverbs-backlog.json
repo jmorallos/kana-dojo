@@ -1383,7 +1383,9 @@
     "english": "A bee on a crying face",
     "meaning": "Misfortune piles up",
     "completed": false,
-    "issued": true
+    "issued": false,
+    "completedBy": "febinchundakkattiil",
+    "completedPR": 14092
   },
   {
     "id": 155,
