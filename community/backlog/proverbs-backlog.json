@@ -519,7 +519,9 @@
     "english": "Haste will spoil things",
     "meaning": "Haste makes waste",
     "completed": false,
-    "issued": true
+    "issued": false,
+    "completedBy": "Brajesh9373",
+    "completedPR": 14295
   },
   {
     "id": 59,
