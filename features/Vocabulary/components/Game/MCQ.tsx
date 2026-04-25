@@ -17,6 +17,15 @@ import FuriganaText from '@/shared/ui-composite/text/FuriganaText';
 import { useCrazyModeTrigger } from '@/features/CrazyMode/hooks/useCrazyModeTrigger';
 import { getGlobalAdaptiveSelector } from '@/shared/utils/adaptiveSelection';
 import { useSmartReverseMode } from '@/shared/hooks/game/useSmartReverseMode';
+import {
+  formatKeyToQuizType,
+  getAvailableQuestionFormats,
+  getQuestionFormatKey,
+  type VocabQuestionFormat,
+  type VocabQuizType,
+} from '@/features/Vocabulary/components/Game/vocabFormatLock';
+import useClassicSessionStore from '@/shared/store/useClassicSessionStore';
+import useSetProgressStore from '@/features/Progress/store/useSetProgressStore';
 
 const random = new Random();
 
@@ -106,6 +115,10 @@ interface VocabMCQProps {
 
 const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
   const hasWords = !!selectedWordObjs && selectedWordObjs.length > 0;
+  const logAttempt = useClassicSessionStore(state => state.logAttempt);
+  const recordVocabularyProgress = useSetProgressStore(
+    state => state.recordVocabularyProgress,
+  );
   const { isReverse, decideNextMode, recordWrongAnswer } =
     useSmartReverseMode();
   const {
@@ -250,6 +263,21 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
         </>,
       );
       setCurrentWordObj(correctWordObj as IVocabObj);
+      logAttempt({
+        questionId: correctChar,
+        questionPrompt: String(displayChar),
+        expectedAnswers: [String(targetChar)],
+        userAnswer: selectedOption,
+        inputKind: 'pick',
+        isCorrect: true,
+        optionsShown: shuffledOptions,
+        extra: {
+          contentType: 'vocabulary',
+          canonicalItemKey: correctChar,
+          questionType: quizType,
+          isReverse,
+        },
+      });
     } else {
       handleWrongAnswer(selectedOption);
       setFeedback(
@@ -258,6 +286,21 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
           <CircleX className='inline text-(--main-color)' />
         </>,
       );
+      logAttempt({
+        questionId: correctChar,
+        questionPrompt: String(displayChar),
+        expectedAnswers: [String(targetChar)],
+        userAnswer: selectedOption,
+        inputKind: 'pick',
+        isCorrect: false,
+        optionsShown: shuffledOptions,
+        extra: {
+          contentType: 'vocabulary',
+          canonicalItemKey: correctChar,
+          questionType: quizType,
+          isReverse,
+        },
+      });
     }
   };
 
@@ -266,11 +309,17 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
     addCharacterToHistory(correctChar);
     incrementCharacterScore(correctChar, 'correct');
     incrementCorrectAnswers();
+    void recordVocabularyProgress(correctChar, quizType);
     setScore(score + 1);
     setWrongSelectedAnswers([]);
     triggerCrazyMode();
     // Update adaptive weight system - reduces probability of mastered words
     adaptiveSelector.updateCharacterWeight(correctChar, true);
+    adaptiveSelector.registerQuestionFormatResult(
+      correctChar,
+      getQuestionFormatKey(quizType, isReverse),
+      true,
+    );
     // Smart algorithm decides next mode based on performance
     decideNextMode();
     // Track vocabulary correct for achievements
@@ -292,6 +341,11 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
     triggerCrazyMode();
     // Update adaptive weight system - increases probability of difficult words
     adaptiveSelector.updateCharacterWeight(correctChar, false);
+    adaptiveSelector.registerQuestionFormatResult(
+      correctChar,
+      getQuestionFormatKey(quizType, isReverse),
+      false,
+    );
     // Reset consecutive streak without changing mode (avoids rerolling the question)
     recordWrongAnswer();
     // Track wrong streak for achievements (Requirement 10.2)
@@ -316,14 +370,20 @@ const VocabMCQ = ({ selectedWordObjs, isHidden }: VocabMCQProps) => {
     const newWordObj = wordObjMap.get(newChar);
     const wordToCheck = newWordObj?.word ?? '';
 
-    // Only toggle to reading quiz if the word contains kanji
-    // Pure kana words skip reading quiz since reading === word
-    if (containsKanji(wordToCheck)) {
-      setQuizType(prev => (prev === 'meaning' ? 'reading' : 'meaning'));
-    } else {
-      // For pure kana words, always use meaning quiz
-      setQuizType('meaning');
-    }
+    const baseQuizType: VocabQuizType = containsKanji(wordToCheck)
+      ? quizType === 'meaning'
+        ? 'reading'
+        : 'meaning'
+      : 'meaning';
+    const lockedFormat = adaptiveSelector.getPreferredLockedFormat(
+      newChar,
+      getAvailableQuestionFormats(wordToCheck, isReverse),
+    );
+    setQuizType(
+      lockedFormat
+        ? formatKeyToQuizType(lockedFormat as VocabQuestionFormat)
+        : baseQuizType,
+    );
   };
 
   const displayCharLang =

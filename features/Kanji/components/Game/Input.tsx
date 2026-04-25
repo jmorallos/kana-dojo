@@ -18,6 +18,7 @@ import { GameBottomBar } from '@/shared/ui-composite/Game/GameBottomBar';
 import useClassicSessionStore from '@/shared/store/useClassicSessionStore';
 import { useThemePreferences } from '@/features/Preferences';
 import { cn } from '@/shared/utils/utils';
+import useSetProgressStore from '@/features/Progress/store/useSetProgressStore';
 
 // Get the global adaptive selector for weighted character selection
 const adaptiveSelector = getGlobalAdaptiveSelector();
@@ -37,6 +38,9 @@ const KanjiInputGame = ({
   isReverse = false,
 }: KanjiInputGameProps) => {
   const logAttempt = useClassicSessionStore(state => state.logAttempt);
+  const recordKanjiProgress = useSetProgressStore(
+    state => state.recordKanjiProgress,
+  );
   // Get the current JLPT level from the Kanji store
   const selectedKanjiCollection = useKanjiStore(
     state => state.selectedKanjiCollection,
@@ -227,11 +231,13 @@ const KanjiInputGame = ({
     recordAnswerTime(answerTimeMs);
     resetTimer();
     setCurrentKanjiObj(correctKanjiObj as IKanjiObj);
+    const canonicalKanjiChar = correctKanjiObj?.kanjiChar ?? correctChar;
 
     playCorrect();
-    addCharacterToHistory(correctChar);
-    incrementCharacterScore(correctChar, 'correct');
+    addCharacterToHistory(canonicalKanjiChar);
+    incrementCharacterScore(canonicalKanjiChar, 'correct');
     incrementCorrectAnswers();
+    void recordKanjiProgress(canonicalKanjiChar);
     setScore(score + 1);
 
     triggerCrazyMode();
@@ -257,7 +263,7 @@ const KanjiInputGame = ({
       </>,
     );
     logAttempt({
-      questionId: correctChar,
+      questionId: canonicalKanjiChar,
       questionPrompt: correctChar,
       expectedAnswers: Array.isArray(targetChar)
         ? targetChar.map(v => String(v))
@@ -266,15 +272,20 @@ const KanjiInputGame = ({
       inputKind: 'type',
       isCorrect: true,
       timeTakenMs: answerTimeMs,
-      extra: { isReverse },
+      extra: {
+        contentType: 'kanji',
+        canonicalItemKey: canonicalKanjiChar,
+        isReverse,
+      },
     });
   };
 
   const handleWrongAnswer = () => {
+    const canonicalKanjiChar = correctKanjiObj?.kanjiChar ?? correctChar;
     setInputValue('');
     playErrorTwice();
 
-    incrementCharacterScore(correctChar, 'wrong');
+    incrementCharacterScore(canonicalKanjiChar, 'wrong');
     incrementWrongAnswers();
     if (score - 1 < 0) {
       setScore(0);
@@ -286,7 +297,7 @@ const KanjiInputGame = ({
     incrementWrongStreak();
     setBottomBarState('wrong');
     logAttempt({
-      questionId: correctChar,
+      questionId: canonicalKanjiChar,
       questionPrompt: correctChar,
       expectedAnswers: Array.isArray(targetChar)
         ? targetChar.map(v => String(v))
@@ -294,7 +305,11 @@ const KanjiInputGame = ({
       userAnswer: inputValue.trim(),
       inputKind: 'type',
       isCorrect: false,
-      extra: { isReverse },
+      extra: {
+        contentType: 'kanji',
+        canonicalItemKey: canonicalKanjiChar,
+        isReverse,
+      },
     });
   };
 

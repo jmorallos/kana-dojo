@@ -45,14 +45,15 @@ type LevelSetCardsProps<TLevel extends string, TItem> = {
   ) => void;
 
   renderSetDictionary: (items: TItem[]) => React.ReactNode;
+  getSetProgress: (items: TItem[]) => number;
 
   loadingText: string;
 };
 
 const INITIAL_ROWS = 5;
 const ROWS_PER_LOAD = 5;
-const LEVEL_SET_SELECTED_FLOAT_CLASSES =
-  'motion-safe:animate-float [--float-distance:-3px] delay-1000ms';
+const LEVEL_SET_SELECTED_FLOAT_CLASSES = '';
+  // 'motion-safe:animate-float [--float-distance:-3px] delay-1000ms';
 
 const LevelSetCards = <TLevel extends string, TItem>({
   levelOrder,
@@ -68,6 +69,7 @@ const LevelSetCards = <TLevel extends string, TItem>({
   collapsedRows,
   setCollapsedRows,
   renderSetDictionary,
+  getSetProgress,
   loadingText,
 }: LevelSetCardsProps<TLevel, TItem>) => {
   const { playClick } = useClick();
@@ -336,6 +338,9 @@ const LevelSetCards = <TLevel extends string, TItem>({
                     setTemp.end * itemsPerSet,
                   );
                   const isSelected = selectedSets.includes(setTemp.name);
+                  const progressPercent = Math.round(
+                    getSetProgress(setItems) * 100,
+                  );
 
                   return (
                     <div
@@ -346,6 +351,21 @@ const LevelSetCards = <TLevel extends string, TItem>({
                         i < rowSets.length - 1 && 'md:border-r-1',
                       )}
                     >
+                      {/* Progress Bar */}
+                      <div className='mb-4 w-full max-md:mx-4 max-md:w-[calc(100%-2rem)]'>
+                        <div className='h-8 w-full overflow-hidden rounded-2xl bg-(--background-color)'>
+                          <div
+                            className='h-full rounded-2xl transition-all duration-500'
+                            style={{
+                              width: `${progressPercent}%`,
+                              background:
+                                'linear-gradient(to right, var(--secondary-color), var(--main-color))',
+                            }}
+                          />
+                        </div>
+                      </div>
+
+
                       <button
                       className={clsx(
                         'group flex items-center justify-center gap-2 text-2xl',

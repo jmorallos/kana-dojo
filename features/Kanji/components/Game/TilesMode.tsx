@@ -25,6 +25,7 @@ import {
 } from '@/shared/ui-composite/Game/TilesModeShared';
 import TilesModeGrid from '@/shared/ui-composite/Game/TilesModeGrid';
 import useClassicSessionStore from '@/shared/store/useClassicSessionStore';
+import useSetProgressStore from '@/features/Progress/store/useSetProgressStore';
 
 const random = new Random();
 const adaptiveSelector = getGlobalAdaptiveSelector();
@@ -52,6 +53,9 @@ const KanjiTilesMode = ({
   onWrong: externalOnWrong,
 }: KanjiTilesModeProps) => {
   const logAttempt = useClassicSessionStore(state => state.logAttempt);
+  const recordKanjiProgress = useSetProgressStore(
+    state => state.recordKanjiProgress,
+  );
   // Smart reverse mode - used when not controlled externally
   const {
     isReverse: internalIsReverse,
@@ -263,6 +267,7 @@ const KanjiTilesMode = ({
       // Track stats for the kanji
       addCharacterToHistory(questionData.kanjiChar);
       incrementCharacterScore(questionData.kanjiChar, 'correct');
+      void recordKanjiProgress(questionData.kanjiChar);
       adaptiveSelector.updateCharacterWeight(questionData.kanjiChar, true);
       incrementKanjiCorrect(selectedKanjiCollection.toUpperCase());
 
@@ -292,7 +297,11 @@ const KanjiTilesMode = ({
         isCorrect: true,
         timeTakenMs: answerTimeMs,
         optionsShown: Array.from(questionData.allTiles.values()),
-        extra: { isReverse },
+        extra: {
+          contentType: 'kanji',
+          canonicalItemKey: questionData.kanjiChar,
+          isReverse,
+        },
       });
     } else {
       resetAnswerTimer();
@@ -324,7 +333,11 @@ const KanjiTilesMode = ({
         inputKind: 'word_building',
         isCorrect: false,
         optionsShown: Array.from(questionData.allTiles.values()),
-        extra: { isReverse },
+        extra: {
+          contentType: 'kanji',
+          canonicalItemKey: questionData.kanjiChar,
+          isReverse,
+        },
       });
     }
   }, [

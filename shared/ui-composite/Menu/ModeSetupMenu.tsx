@@ -1,5 +1,6 @@
 'use client';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useKanaSelection } from '@/features/Kana';
 import { useKanjiSelection } from '@/features/Kanji';
 import { useVocabSelection } from '@/features/Vocabulary';
@@ -51,6 +52,7 @@ const difficultyIcons: Record<GauntletDifficulty, React.ReactNode> = {
 const USE_NEW_GAME_MODE_ICON_STYLE = true;
 const GAME_MODE_ICON_SIZE = 22;
 const GAME_MODE_ICON_FLOAT_DELAY_CLASS = '[animation-delay:180ms]';
+const USE_FLUSH_DIFFICULTY_TABS = false;
 const gameModeIconStyle = {
   base: 'motion-safe:animate-float flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-b-6 transition-colors [--float-distance:-2px]',
   selected:
@@ -328,37 +330,63 @@ const ModeSetupMenu = ({
             <>
               <div className='space-y-3'>
                 <h3 className='text-sm text-(--main-color)'>Difficulty</h3>
-                <div className='flex w-full justify-center gap-1 rounded-[22px] bg-(--card-color) p-1.5'>
-                  {(
-                    Object.entries(DIFFICULTY_CONFIG) as [
-                      GauntletDifficulty,
-                      (typeof DIFFICULTY_CONFIG)[GauntletDifficulty],
-                    ][]
-                  ).map(([key, config]) => {
-                    const isSelected = key === gauntletDifficulty;
-                    return (
-                      <button
-                        key={key}
-                        onClick={() => {
-                          playClick();
-                          setGauntletDifficulty(key);
-                          gauntletSettings.setDifficulty(
-                            dojoType,
-                            key,
-                          );
-                        }}
-                        className={clsx(
-                          'flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-2xl px-4 pt-3 pb-5 text-sm font-semibold transition-colors duration-300',
-                          isSelected
-                            ? 'border-b-10 border-(--main-color-accent) bg-(--main-color) text-(--background-color)'
-                            : 'bg-transparent text-(--secondary-color) hover:text-(--main-color)',
-                        )}
-                      >
-                        {difficultyIcons[key]}
-                        <span>{config.label}</span>
-                      </button>
-                    );
-                  })}
+                <div className='mx-auto w-full rounded-2xl border-1 border-(--border-color) bg-(--background-color) p-1 shadow-[0_12px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl'>
+                  <div
+                    className={clsx(
+                      'flex w-full gap-0 bg-(--card-color)',
+                      USE_FLUSH_DIFFICULTY_TABS
+                        ? 'rounded-[22px] p-0'
+                        : 'rounded-[22px] p-1.5',
+                    )}
+                  >
+                    {(
+                      Object.entries(DIFFICULTY_CONFIG) as [
+                        GauntletDifficulty,
+                        (typeof DIFFICULTY_CONFIG)[GauntletDifficulty],
+                      ][]
+                    ).map(([key, config]) => {
+                      const isSelected = key === gauntletDifficulty;
+                      return (
+                        <div key={key} className='relative flex-1'>
+                          {isSelected && (
+                            <motion.div
+                              layoutId='activeDifficultyTab'
+                              className={clsx(
+                                'absolute inset-0 border-b-10 border-(--main-color-accent) bg-(--main-color)',
+                                USE_FLUSH_DIFFICULTY_TABS
+                                  ? 'rounded-[22px]'
+                                  : 'rounded-2xl',
+                              )}
+                              transition={{
+                                type: 'spring',
+                                stiffness: 300,
+                                damping: 30,
+                              }}
+                            />
+                          )}
+                          <button
+                            onClick={() => {
+                              playClick();
+                              setGauntletDifficulty(key);
+                              gauntletSettings.setDifficulty(dojoType, key);
+                            }}
+                            className={clsx(
+                              'relative z-10 flex w-full cursor-pointer items-center justify-center gap-1.5 px-4 pt-3 pb-5 text-sm font-semibold transition-colors duration-300',
+                              USE_FLUSH_DIFFICULTY_TABS
+                                ? 'rounded-[22px]'
+                                : 'rounded-2xl',
+                              isSelected
+                                ? 'text-(--background-color)'
+                                : 'bg-transparent text-(--secondary-color) hover:text-(--main-color)',
+                            )}
+                          >
+                            {difficultyIcons[key]}
+                            <span>{config.label}</span>
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
                 <p className='text-center text-xs text-(--secondary-color)'>
                   {DIFFICULTY_CONFIG[gauntletDifficulty].description}
@@ -508,7 +536,7 @@ function GameModeCards({
             }}
             className={clsx(
               'w-full rounded-2xl p-5 text-left hover:cursor-pointer',
-              'flex items-center gap-4 border-2 bg-(--card-color)',
+              'flex items-center gap-4 border-4 bg-(--card-color)',
               isSelected ? 'border-(--main-color)' : 'border-(--border-color)',
             )}
           >

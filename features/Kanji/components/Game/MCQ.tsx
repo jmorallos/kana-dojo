@@ -18,6 +18,7 @@ import { useCrazyModeTrigger } from '@/features/CrazyMode/hooks/useCrazyModeTrig
 import { getGlobalAdaptiveSelector } from '@/shared/utils/adaptiveSelection';
 import { useSmartReverseMode } from '@/shared/hooks/game/useSmartReverseMode';
 import useClassicSessionStore from '@/shared/store/useClassicSessionStore';
+import useSetProgressStore from '@/features/Progress/store/useSetProgressStore';
 
 const random = new Random();
 
@@ -100,6 +101,9 @@ interface KanjiMCQProps {
 
 const KanjiMCQ = ({ selectedKanjiObjs, isHidden }: KanjiMCQProps) => {
   const logAttempt = useClassicSessionStore(state => state.logAttempt);
+  const recordKanjiProgress = useSetProgressStore(
+    state => state.recordKanjiProgress,
+  );
   const { isReverse, decideNextMode, recordWrongAnswer } =
     useSmartReverseMode();
 
@@ -265,6 +269,7 @@ const KanjiMCQ = ({ selectedKanjiObjs, isHidden }: KanjiMCQProps) => {
     addCharacterToHistory(correctChar);
     incrementCharacterScore(correctChar, 'correct');
     incrementCorrectAnswers();
+    void recordKanjiProgress(correctChar);
     setScore(score + 1);
     setWrongSelectedAnswers([]);
     triggerCrazyMode();
@@ -284,7 +289,11 @@ const KanjiMCQ = ({ selectedKanjiObjs, isHidden }: KanjiMCQProps) => {
       inputKind: 'pick',
       isCorrect: true,
       optionsShown: shuffledOptions,
-      extra: { isReverse },
+      extra: {
+        contentType: 'kanji',
+        canonicalItemKey: correctChar,
+        isReverse,
+      },
     });
   };
 
@@ -313,7 +322,11 @@ const KanjiMCQ = ({ selectedKanjiObjs, isHidden }: KanjiMCQProps) => {
       inputKind: 'pick',
       isCorrect: false,
       optionsShown: shuffledOptions,
-      extra: { isReverse },
+      extra: {
+        contentType: 'kanji',
+        canonicalItemKey: correctChar,
+        isReverse,
+      },
     });
   };
 
