@@ -354,5 +354,16 @@
   {
     "_added_by": "bounty-bot",
     "timestamp": "2026-04-27T00:52:26.468101"
+  },
+  {
+    "question": "Which Japanese city is known for its deer roaming freely in a large park? (Community variation 12)",
+    "difficulty": "medium",
+    "answers": [
+      "Nara",
+      "Yokohama",
+      "Kobe",
+      "Nagoya"
+    ],
+    "correctIndex": 0
   }
 ]
