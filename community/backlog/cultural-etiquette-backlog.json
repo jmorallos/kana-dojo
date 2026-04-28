@@ -212,7 +212,7 @@
     "dont": "無言で食べ始める",
     "note": "感謝を示す慣習。",
     "id": 24,
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -437,7 +437,7 @@
     "dont": "話を遮る",
     "note": "合意形成を重視する文化。",
     "id": 49,
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
@@ -1067,7 +1067,7 @@
     "dont": "両側を塞ぐ",
     "note": "地域差に注意。",
     "id": 119,
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
