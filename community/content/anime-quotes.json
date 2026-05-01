@@ -355,5 +355,33 @@
     "english": "Yes! Yes! Yes! Yes! (alt wording 2) (alt wording 54)",
     "anime": "JoJo's Bizarre Adventure: Stardust Crusaders",
     "character": "DIO"
-  }
+  },
+  {
+  "japanese": "駆逐してやる!この世から一匹残らず!",
+  "romaji": "Kuchiku shite yaru! Kono yo kara ippiki nokorazu!",
+  "english": "I'll exterminate them! Every last one from this world! (alt wording 36) (alt wording 88)",
+  "anime": "Attack on Titan",
+  "character": "Eren Yeager"
+},
+{
+  "japanese": "おれは人間を超越する！",
+  "romaji": "Ore wa ningen o chouetsu suru!",
+  "english": "I will transcend humanity! (alt wording 14)",
+  "anime": "JoJo's Bizarre Adventure: Battle Tendency",
+  "character": "Kars"
+},
+{
+  "japanese": "グララララ",
+  "romaji": "Gurararara",
+  "english": "Gurararara! (alt wording 31) (alt wording 83)",
+  "anime": "One Piece",
+  "character": "Edward Newgate (Whitebeard)"
+},
+{
+  "japanese": "月に代わっておしおきよ!",
+  "romaji": "Tsuki ni kawatte oshioki yo!",
+  "english": "In the name of the moon, I'll punish you! (alt wording 41)",
+  "anime": "Sailor Moon",
+  "character": "Usagi Tsukino"
+},
 ]

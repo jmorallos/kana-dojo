@@ -412,7 +412,43 @@
   "romaji": "Inu mo arukeba bou ni ataru",
   "english": "Even a walking dog will hit a stick",
   "meaning": "Try anything and you might get lucky (or unlucky)"
-}
+},
+{
+  "japanese": "灯台下暗し",
+  "romaji": "Toudai moto kurashi",
+  "english": "It's darkest under the lighthouse",
+  "meaning": "The obvious is often overlooked"
+},
+{
+  "japanese": "良薬は口に苦し",
+  "romaji": "Ryouyaku wa kuchi ni nigashi",
+  "english": "Good medicine tastes bitter",
+  "meaning": "Helpful advice often sounds harsh"
+},
+{
+  "japanese": "楽あれば苦あり",
+  "romaji": "Raku areba ku ari",
+  "english": "After ease comes hardship",
+  "meaning": "Good times and bad times alternate"
+},
+{
+    "japanese": "三人寄れば文殊の知恵",
+    "romaji": "Sannin yoreba monju no chie",
+    "english": "Three people together have the wisdom of Monju",
+    "meaning": "Two heads are better than one"
+},
+  {
+  "japanese": "笑う門には福来る",
+  "romaji": "Warau kado ni wa fuku kitaru",
+  "english": "Fortune comes to a laughing gate",
+  "meaning": "Happiness and good fortune come to those who smile"
+},
+  {
+    "japanese": "石橋を叩いて渡る",
+    "romaji": "Ishibashi wo tataite wataru",
+    "english": "Tap a stone bridge before crossing",
+    "meaning": "Be very cautious"
+  }
 ]
 
 
